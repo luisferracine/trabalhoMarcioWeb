@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Atlas de Países
 
-## Getting Started
+Aplicação web construída com Next.js + React para explorar países da API Rest Countries.
 
-First, run the development server:
+## Funcionalidades
+
+- Listagem de países em cards com bandeira, nome, região, capital e população.
+- Filtros por região no header, com atualização instantânea da lista.
+- Página dinâmica de detalhes por país em /pais/[code].
+- Exibição de dados complementares no detalhe: sub-região, área, idiomas, moedas, fuso horário, FIFA, status ONU e link do Google Maps.
+
+## Tecnologias utilizadas
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- ESLint
+- API externa Rest Countries
+
+## Pré-requisitos
+
+- Node.js 20+
+- pnpm 9+
+
+Se você ainda não tiver pnpm instalado:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install -g pnpm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como executar o projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone o repositório e entre na pasta:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone <url-do-repositorio>
+cd trabalho-marcio-web
+```
 
-## Learn More
+2. Instale as dependências:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Rode o servidor de desenvolvimento:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+4. Acesse no navegador:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts disponíveis
+
+- Desenvolvimento:
+
+```bash
+pnpm dev
+```
+
+- Build de produção:
+
+```bash
+pnpm build
+```
+
+- Iniciar app em modo produção:
+
+```bash
+pnpm start
+```
+
+- Lint:
+
+```bash
+pnpm lint
+```
+
+- Verificação de tipos (TypeScript):
+
+```bash
+pnpm -s tsc --noEmit
+```
+
+## Estrutura principal
+
+```text
+app/
+	Components/
+		Card.tsx
+		CountryFiltersPanel.tsx
+	lib/
+		api/
+			api.ts
+	pais/
+		[code]/
+			page.tsx
+	globals.css
+	layout.tsx
+	page.tsx
+```
+
+## Fluxo de navegação
+
+- Página inicial:
+	mostra os filtros e a listagem de países.
+- Botão "Ver detalhes do país" no card:
+	abre a rota dinâmica /pais/[code].
+- Página de detalhes:
+	busca os dados completos do país pelo código (alpha code).
+
+## Fonte de dados
+
+Este projeto utiliza a API pública Rest Countries:
+
+- Lista simplificada:
+	https://restcountries.com/v3.1/all?fields=name,flags,region,capital,population,cca2
+- Detalhe por código:
+	https://restcountries.com/v3.1/alpha/{code}
+
+## Boas práticas para contribuição
+
+- Mantenha componentes reutilizáveis e com tipagem forte.
+- Evite acoplar UI diretamente ao formato bruto da API.
+- Centralize normalização de dados no módulo de API.
+- Rode lint e verificação de tipos antes de abrir PR.
+
+## Troubleshooting rápido
+
+- Porta 3000 em uso:
+	rode com outra porta, por exemplo: pnpm dev -- -p 3001
+- Falha de fetch para API externa:
+	valide conexão de rede e disponibilidade da Rest Countries.
+- Tipos quebrando após mudança de payload:
+	ajuste a normalização em app/lib/api/api.ts.
+
+## Próximos passos sugeridos
+
+- Migrar img para next/image para otimização.
+- Adicionar estados de loading e skeleton na página inicial.
+- Implementar testes de componentes e integração.
