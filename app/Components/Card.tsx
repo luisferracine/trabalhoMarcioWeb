@@ -1,8 +1,14 @@
-interface Country {
+import Link from "next/link";
+
+export interface Country {
   common: string;
   official: string;
   png: string;
   alt: string;
+  region?: string;
+  capital?: string;
+  population?: number;
+  code?: string;
 }
 
 interface CardProps {
@@ -42,6 +48,40 @@ export default function Card({ lista }: CardProps) {
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-600">
             {pais.official}
           </p>
+
+          <div className="mt-4 flex flex-wrap gap-2 text-xs">
+            <span className="rounded-full bg-orange-100 px-2.5 py-1 font-semibold text-orange-700">
+              {pais.code ?? "--"}
+            </span>
+            <span className="rounded-full bg-cyan-100 px-2.5 py-1 font-semibold text-cyan-700">
+              {pais.region ?? "Sem região"}
+            </span>
+          </div>
+
+          <div className="mt-3 text-xs text-slate-600">
+            <p>Capital: {pais.capital ?? "Não informada"}</p>
+            <p>
+              População: {" "}
+              {typeof pais.population === "number"
+                ? pais.population.toLocaleString("pt-BR")
+                : "Não informada"}
+            </p>
+          </div>
+
+          <div className="mt-4">
+            {pais.code ? (
+              <Link
+                href={`/pais/${pais.code.toLowerCase()}`}
+                className="inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-700"
+              >
+                Ver detalhes do país
+              </Link>
+            ) : (
+              <span className="inline-flex items-center rounded-lg bg-slate-200 px-4 py-2 text-xs font-semibold text-slate-500">
+                Código indisponível
+              </span>
+            )}
+          </div>
         </article>
       ))}
     </div>
